@@ -27,13 +27,13 @@ const Netflix = () => {
  useEffect(() =>{
   if(genresLoaded) dispatch(fetchMovies({ type: "all"}))
   
- },[])
+ },[genresLoaded])
  
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true)
     return () => (window.onscroll = null)
   }
-  console.log(movies);
+//console.log(movies);
   return (
     <Container>
       <Navbar isScroolled={isScroolled}/>
@@ -62,6 +62,10 @@ const Container = styled.div`
       filter: brightness(60%);
     }
     img {
+      @media only screen and (max-width: 769px) {
+            height: 100vh;
+            width: 100vw;
+          }
       height: 100vh;
       width: 100vw;
     }
@@ -70,15 +74,32 @@ const Container = styled.div`
       bottom: 5rem;
       .logo {
         img {
+          @media only screen and (max-width: 769px) {
+            width: 70%;
+            height: 100%;
+            margin-left: 1rem;
+          }
           width: 100%;
           height: 100%;
           margin-left: 5rem;
         }
       }
       .buttons {
+        @media only screen and (max-width: 769px) {
+             margin: 2rem;
+             gap: 2rem;
+          }
         margin: 5rem;
         gap: 2rem;
         button {
+          @media only screen and (max-width: 769px) {
+              font-size: 0.8rem;
+              gap: 2rem;
+              border-radius: 0.2rem;
+              padding: 0.5rem;
+              padding-left: 2rem;
+              padding-right: 2.4rem;
+          }
           font-size: 1.4rem;
           gap: 1rem;
           border-radius: 0.2rem;

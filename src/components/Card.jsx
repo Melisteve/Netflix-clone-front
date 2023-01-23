@@ -5,20 +5,51 @@ import styled from 'styled-components'
 import {IoPlayCircleSharp} from "react-icons/io5"
 import {RiThumbUpFill, RiThumbDownFill} from "react-icons/ri"
 import {BsCheck} from "react-icons/bs"
-import {AiOutlinePlus} from "react-icons/ai"
+import {AiOutlineDelete, AiOutlinePlus} from "react-icons/ai"
 import { BiChevronDown } from "react-icons/bi";
+import { onAuthStateChanged } from 'firebase/auth';
+import { firebaseAuth } from '../utils/firebase.config';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { removeMovieFromLiked } from '../store';
 
-const Card = ({movieData, isliked = false}) => {
+ 
+const  Card = React.memo(({movieData, isLiked = false}) => {
+    
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [email, setEmail] = useState(undefined)
     const [ isHovered, setIsHovered] = useState(false);
-  return (
-    <Container  onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+    
+    onAuthStateChanged(firebaseAuth, (currentUser) => {
+      if (currentUser) setEmail(currentUser.email);
+      else navigate("/login")
+    });
 
-      <img src={`https://image.tmdb.org/t/p/w500${movieData.image}`} alt="movie_image" />
+
+    const addToList = async () => {
+      
+      try {
+        await axios.post("http://localhost:5000/api/user/add", {
+          email,
+          data: movieData,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    
+    
+    
+    return (
+      <Container  onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+
+      <img src={`https://image.tmdb.org/t/p/w500${movieData.image}`} alt="movie_image" onClick={() => navigate("/player")} />
 
       {
         isHovered && (
-            <div className="hover">
+          <div className="hover">
                 
                 <div className="image-video-container">
                     <img src={`https://image.tmdb.org/t/p/w500${movieData.image}`} alt="movie" onClick={() => navigate("/player")}/>
@@ -31,13 +62,18 @@ const Card = ({movieData, isliked = false}) => {
                             <IoPlayCircleSharp title='play' onClick={() => navigate("/player")}/>
                             <RiThumbUpFill title='Like'/>
                             <RiThumbDownFill title='Dislike'/>
-                            {
-                                isliked ?(
-                                   <BsCheck title='Remove from list'/>
+                            {isLiked ?(
+                                <AiOutlineDelete title='Remove from list'
+                                onClick={() =>
+                                  dispatch(
+                                    removeMovieFromLiked({ movieId: movieData.id, email })
+                                  )
+                                }
+                                />
                                 ):(
-                                    <AiOutlinePlus title='Add to my list'/>
-                                )
-                            }
+                                  <AiOutlinePlus title='Add to my list' onClick={addToList}/>
+                                  )
+                                }
                         </div>
                         <div className="info">
                             <BiChevronDown title='More info'/>
@@ -45,7 +81,7 @@ const Card = ({movieData, isliked = false}) => {
                     </div>
                     <div className="genres flex">
                         <ul className='flex'>{movieData.genres.map((genre) =>{
-                           return <li key={genre}>{genre}</li>
+                          return <li key={genre}>{genre}</li>
                         })}</ul>
                     </div>
                 </div>
@@ -55,6 +91,7 @@ const Card = ({movieData, isliked = false}) => {
     </Container>
   )
 }
+) 
 
 const Container = styled.div`
   max-width: 230px;

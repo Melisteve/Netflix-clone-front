@@ -57,6 +57,7 @@ const Signup = () => {
 const Container = styled.div`
   position: relative;
   .content {
+    
     position: absolute;
     top: 0;
     left: 0;
@@ -64,23 +65,51 @@ const Container = styled.div`
     height: 100vh;
     width: 100vw;
     display: grid;
+    @media only screen and (max-width: 769px) {
+              grid-template-rows: 15vh 80vh;
+              height: 100vh;
+              width: 100vw;
+          }
     grid-template-rows: 15vh 85vh;
     .body {
+      @media only screen and (max-width: 769px) {
+               gap: 0.5rem;
+               padding: -25px;
+          }
       gap: 1rem;
       .text {
+        @media only screen and (max-width: 769px) {
+            gap: 0.8rem;
+              text-align: center;
+              font-size: 0.9rem;
+          }
         gap: 1rem;
         text-align: center;
         font-size: 2rem;
         h1 {
+          @media only screen and (max-width: 769px) {
+            padding: 0 10rem;
+          }
           padding: 0 25rem;
         }
       }
       .form {
+        @media only screen and (max-width: 769px) {
+                       
+          }
         display: grid;
         grid-template-columns: ${({ showPassword }) =>
           showPassword ? "1fr 1fr" : "2fr 1fr"};
         width: 60%;
         input {
+          @media only screen and (max-width: 769px) {
+            color: black;
+               border: none;
+               padding: 1rem;
+                font-size: 0.8rem;
+                border: 1px solid black;
+             
+          }
           color: black;
           border: none;
           padding: 1.5rem;
@@ -91,6 +120,7 @@ const Container = styled.div`
           }
         }
         button {
+         
           padding: 0.5rem 1rem;
           background-color: #e50914;
           border: none;

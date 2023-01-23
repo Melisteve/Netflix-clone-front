@@ -66,6 +66,9 @@ const Container = styled.div`
     height: 100vh;
     width: 100vw;
     background-color: rgba(0, 0, 0, 0.5);
+    @media only screen and (max-width: 769px) {
+             grid-template-rows: 5vh 70vh;;
+          }
     grid-template-rows: 15vh 85vh;
     .form-container {
       gap: 2rem;

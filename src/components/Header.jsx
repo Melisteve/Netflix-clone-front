@@ -18,12 +18,24 @@ const Header = (props) => {
 
 const Container = styled.div`
  padding: 0 4rem;
+ @media only screen and (max-width: 769px) {
+           padding: 0 2rem;
+          }
   .logo {
+    
     img {
+      @media only screen and (max-width: 769px) {
+            height: 2rem;
+            margin: 1rem;
+          }
       height: 5rem;
     }
   }
   button {
+    @media only screen and (max-width: 769px) {
+            padding: 0.5rem 0.5rem;
+            margin: 3rem;
+          }
     padding: 0.5rem 1rem;
     background-color: #e50914;
     border: none;

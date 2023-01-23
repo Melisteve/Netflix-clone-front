@@ -89,14 +89,35 @@ const Container = styled.div`
     padding: 0 4rem;
     align-items: center;
     transition: 0.3s ease-in-out;
+    @media only screen and (max-width: 769px) {
+            height: 3rem;
+            padding: 0.1rem;
+          }
     .left {
+      @media only screen and (max-width: 769px) {
+            gap: 0.8rem;
+          }
       gap: 2rem;
       .brand {
         img {
+          @media only screen and (max-width: 769px) {
+            height: 2rem;
+          }
           height: 4rem;
         }
       }
       .links {
+        @media only screen and (max-width: 769px) {
+             gap: 0.5rem;
+             li {
+          a {
+            color: white;
+            font-size: 1rem;
+            text-decoration: none;
+          
+          }
+        }
+      }
         list-style-type: none;
         gap: 2rem;
         li {
